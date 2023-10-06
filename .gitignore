@@ -1,0 +1,10 @@
+# .class files
+*.class
+
+# Eclipse project files
+.classpath
+.project
+.settings/
+
+# persistence.xml files
+persistence.xml

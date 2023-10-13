@@ -8,3 +8,5 @@
 
 # persistence.xml files
 persistence.xml
+/bin/
+/target/

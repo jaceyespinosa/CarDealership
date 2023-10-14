@@ -20,7 +20,7 @@ public class UserInfoHelper {
 	}
 	public List<CarDealership> showAllCars() {
 		EntityManager em = emfactory.createEntityManager();
-		List<CarDealership> allItems = em.createQuery("SELECT A FROM CarDealership A").getResultList();
+		List<CarDealership> allItems = em.createQuery("SELECT A FROM CarDealership A WHERE A.status != 'bought'").getResultList();
 		return allItems;
 	}
 	public void deleteItem(CarDealership toDelete) {
@@ -29,18 +29,17 @@ public class UserInfoHelper {
 		em.getTransaction().begin();
 		TypedQuery<CarDealership> typedQuery = em.createQuery("SELECT cd FROM CarDealership cd " + "WHERE cd.model = :selectedModel " + "AND cd.description = :selectedDescription " + "AND cd.price = :selectedPrice",
 		        CarDealership.class);
-		// Substitute parameter with actual data from the toDelete item
 		typedQuery.setParameter("selectedModel", toDelete.getModel());
 		typedQuery.setParameter("selectedDescription", toDelete.getDescription());
 		typedQuery.setParameter("selectedPrice", toDelete.getPrice());
 
-		// we only want one result
+
 		typedQuery.setMaxResults(1);
 
-		// get the result and save it into a new list item
+
 		CarDealership result = typedQuery.getSingleResult();
 
-		// remove it
+
 		em.remove(result);
 		em.getTransaction().commit();
 		em.close();

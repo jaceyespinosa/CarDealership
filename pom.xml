@@ -3,19 +3,23 @@
   <groupId>cardealership</groupId>
   <artifactId>cardealership</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <packaging>war</packaging>
   <build>
-    <sourceDirectory>src</sourceDirectory>
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.8.1</version>
         <configuration>
-          <release>16</release>
+          <release>17</release>
         </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>3.2.3</version>
       </plugin>
     </plugins>
   </build>
-       <dependencies>
+    <dependencies>
 <dependency>
 	<groupId>mysql</groupId>
 	<artifactId>mysql-connector-java</artifactId>
@@ -52,5 +56,4 @@
   		<version>1.2</version>
   	</dependency>
   </dependencies>
-  
 </project>

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import model.CarDealership;
+import model.Garage;
 
 /**
  * Servlet implementation class navServlet
@@ -68,9 +69,15 @@ public class NavServlet extends HttpServlet {
 	                try {
 	                    Integer tempId = Integer.parseInt(request.getParameter("id"));
 	                    CarDealership carToPurchase = uih.searchForItemById(tempId);
+	                    
 	                    if (carToPurchase != null) {
-	                        carToPurchase.setStatus("bought");
-	                        uih.updateItem(carToPurchase);
+	                        Garage newGarageEntry = new Garage();
+	                        newGarageEntry.setCar(carToPurchase);
+	                        newGarageEntry.setUserId("currentUser");
+	                        
+	                        GarageHelper gh = new GarageHelper();
+	                        gh.insertCar(newGarageEntry);
+
 	                        path = "/Index.jsp";  
 	                    } else {
 	                        System.out.println("Car not found");
@@ -81,7 +88,7 @@ public class NavServlet extends HttpServlet {
 	                break;
 	        }
 	    } else {
-	        System.out.println("No action provided.");
+	        System.out.println("Error!");
 	    }
 
 	    getServletContext().getRequestDispatcher(path).forward(request, response);

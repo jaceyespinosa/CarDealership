@@ -29,6 +29,7 @@ public class UserEntryServlet extends HttpServlet {
 		String userEntryOne = request.getParameter("userModle");
 		String userEntryTwo = request.getParameter("userDescription");
 		String userEntryThree = request.getParameter("userPrice");
+		String status = "available";
 		double userEntryThreeAsDouble;
 
 		try 
@@ -46,12 +47,10 @@ public class UserEntryServlet extends HttpServlet {
 		} 
 		else 
 		{
-			CarDealership car = new CarDealership(userEntryOne, userEntryTwo,userEntryThreeAsDouble);
+			CarDealership car = new CarDealership(userEntryOne, userEntryTwo, userEntryThreeAsDouble, status);
 			UserInfoHelper getInfoObj = new UserInfoHelper();
 			getInfoObj.insertItem(car);
 			getServletContext().getRequestDispatcher("/Index.jsp").forward(request, response);
 		}
 	}
 }
-
-

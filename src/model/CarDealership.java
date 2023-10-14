@@ -13,16 +13,19 @@ public class CarDealership {
 	private String model;
 	private String description;
 	private double price;
+	private String status;
+	
 	public CarDealership() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
-	public CarDealership(String model, String description, double price) {
+	public CarDealership(String model, String description, double price, String status) {
 		super();
 		this.model = model;
 		this.description = description;
 		this.price = price;
+		this.status = status;
 	}
 
 	public int getId() {
@@ -57,6 +60,14 @@ public class CarDealership {
 		this.price = price;
 	}
 
+	
+	public String getStatus() {
+		return status;
+	}
+	
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	@Override
 	public String toString() {
 		return "CarDealership [id=" + id + ", model=" + model + ", description=" + description + ", price=" + price

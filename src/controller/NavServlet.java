@@ -36,37 +36,54 @@ public class NavServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		UserInfoHelper uih = new UserInfoHelper();
-		String act = request.getParameter("doThisToItem");
+	    UserInfoHelper uih = new UserInfoHelper();
+	    String act = request.getParameter("doThisToItem");
+	    String path = "/Index.jsp";
 
-		String path = "/Index.jsp";
+	    if (act != null) {
+	        switch (act) {
+	            case "delete":
+	                try {
+	                    Integer tempId = Integer.parseInt(request.getParameter("id"));
+	                    CarDealership itemToDelete = uih.searchForItemById(tempId);
+	                    uih.deleteItem(itemToDelete);
+	                } catch (NumberFormatException e) {
+	                    System.out.println("Forgot to select an item");
+	                }
+	                break;
+	            case "edit":
+	                try {
+	                    Integer tempId = Integer.parseInt(request.getParameter("id"));
+	                    CarDealership itemToEdit = uih.searchForItemById(tempId);
+	                    request.setAttribute("itemToEdit", itemToEdit);
+	                    path = "/editCar.jsp";
+	                } catch (NumberFormatException e) {
+	                    System.out.println("Forgot to select an item");
+	                }
+	                break;
+	            case "add":
+	                path = "/Index.jsp";
+	                break;
+	            case "purchase":
+	                try {
+	                    Integer tempId = Integer.parseInt(request.getParameter("id"));
+	                    CarDealership carToPurchase = uih.searchForItemById(tempId);
+	                    if (carToPurchase != null) {
+	                        carToPurchase.setStatus("bought");
+	                        uih.updateItem(carToPurchase);
+	                        path = "/Index.jsp";  
+	                    } else {
+	                        System.out.println("Car not found");
+	                    }
+	                } catch (NumberFormatException e) {
+	                    System.out.println("Forgot to select a car");
+	                }
+	                break;
+	        }
+	    } else {
+	        System.out.println("No action provided.");
+	    }
 
-		if (act.equals("delete")) {
-			try {
-				Integer tempId = Integer.parseInt(request.getParameter("id"));
-				CarDealership itemToDelete = uih.searchForItemById(tempId);
-				uih.deleteItem(itemToDelete);
-
-			} catch (NumberFormatException e) {
-				System.out.println("Forgot to select an item");
-			}
-
-		} else if (act.equals("edit")) {
-			try {
-				Integer tempId = Integer.parseInt(request.getParameter("id"));
-				CarDealership itemToEdit = uih.searchForItemById(tempId);
-				request.setAttribute("itemToEdit", itemToEdit);
-				path = "/editCar.jsp";
-			} catch (NumberFormatException e) {
-				System.out.println("Forgot to select an item");
-			}
-
-		} else if (act.equals("add")) {
-			path = "/Index.jsp";
-
-		}
-
-		getServletContext().getRequestDispatcher(path).forward(request, response);
+	    getServletContext().getRequestDispatcher(path).forward(request, response);
 	}
-
 }

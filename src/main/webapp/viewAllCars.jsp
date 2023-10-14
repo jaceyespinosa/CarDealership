@@ -23,6 +23,7 @@
 <input type = "submit" value = "edit" name="doThisToItem" class="btn">
 <input type = "submit" value = "delete" name="doThisToItem" class="btn">
 <input type = "submit" value = "add" name="doThisToItem" class="btn">
+<input type="submit" value="purchase" name="doThisToItem" class="btn">
 </form>
 
 
